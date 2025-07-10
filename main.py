@@ -1,4 +1,8 @@
 import random
+
+Count = 0
+word = None
+
 words = [
     "apple", "banana", "orange", "grape", "lemon", "peach", "cherry", "melon", "pear", "plum",
     "mango", "kiwi", "apricot", "avocado", "blueberry", "coconut", "fig", "guava", "lime", "papaya",
@@ -14,16 +18,31 @@ words = [
 
 def dashes():
     global words
+    global word
     word = random.choice(words)
     num_dashes = len(word)
     dashes = "__  " * num_dashes
     print(dashes)
 
+def guess():
+    global word
+    user_Choice = input("Guess the letter: ")
+    word = list(word)
+    if user_Choice in word:
+        print("You have guessed the letter correctly! ")
+    else:
+        print("This letter is not present in this word")
+
+
 def main():
+    global Count
     user_input = input("Do you want to start the game? (y/n): ").lower()
     if user_input == "y" or user_input == "yes":
         dashes()
+        while Count <= 6:
+            guess()
     else:
         return False
+    
 if __name__ == "__main__":
     main()
