@@ -2,6 +2,7 @@ import random
 
 Count = 0
 word = None
+dashes = None
 
 words = [
     "apple", "banana", "orange", "grape", "lemon", "peach", "cherry", "melon", "pear", "plum",
@@ -16,33 +17,40 @@ words = [
     "thyme", "vanilla", "wasabi", "anise", "bay", "chive", "clove", "coriander", "cress", "marjoram"
 ]
 
-def dashes():
-    global words
-    global word
+def start_game():
+    global word, dashes
     word = random.choice(words)
-    num_dashes = len(word)
-    dashes = "__  " * num_dashes
-    print(dashes)
+    dashes = ["_"] * len(word)
+    print(" ".join(dashes))
 
 def guess():
-    global word
-    user_Choice = input("Guess the letter: ")
-    word = list(word)
-    if user_Choice in word:
-        print("You have guessed the letter correctly! ")
+    global word, dashes, Count
+    user_choice = input("Guess the letter: ").lower()
+    found = False
+    for idx, char in enumerate(word):
+        if char == user_choice:
+            dashes[idx] = char
+            found = True
+    if found:
+        print("You have guessed the letter correctly!")
     else:
         print("This letter is not present in this word")
-
+        Count += 1
+    print(" ".join(dashes))
 
 def main():
     global Count
     user_input = input("Do you want to start the game? (y/n): ").lower()
-    if user_input == "y" or user_input == "yes":
-        dashes()
-        while Count <= 6:
+    if user_input in ("y", "yes"):
+        start_game()
+        while Count < 6 and "_" in dashes:
             guess()
+        if "_" not in dashes:
+            print("Congratulations! You guessed the word:", word)
+        else:
+            print("Game over! The word was:", word)
     else:
-        return False
-    
+        print("Goodbye!")
+
 if __name__ == "__main__":
     main()
