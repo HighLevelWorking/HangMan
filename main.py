@@ -17,6 +17,15 @@ words = [
     "thyme", "vanilla", "wasabi", "anise", "bay", "chive", "clove", "coriander", "cress", "marjoram"
 ]
 
+ascii_thingy = {
+    1:  "   0",
+    2:  "   0\n   |",
+    3:  "   0\n   |\n   |",
+    4:  "   0\n  /|\\\n   |",
+    5:  "   0\n  /|\\\n   |\n  /",
+    6:  "   0\n  /|\\\n   |\n  / \\",
+}
+
 def start_game():
     global word, dashes
     word = random.choice(words)
@@ -24,7 +33,7 @@ def start_game():
     print(" ".join(dashes))
 
 def guess():
-    global word, dashes, Count
+    global word, dashes, Count, ascii_thingy
     user_choice = input("Guess the letter: ").lower()
     found = False
     for idx, char in enumerate(word):
@@ -33,10 +42,13 @@ def guess():
             found = True
     if found:
         print("You have guessed the letter correctly!")
+        print()
     else:
         print("This letter is not present in this word")
+        print()
         Count += 1
     print(" ".join(dashes))
+    print(ascii_thingy[Count] if Count in ascii_thingy else "")
 
 def main():
     global Count
